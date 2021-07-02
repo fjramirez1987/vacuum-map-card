@@ -12,13 +12,16 @@ To be able to use this card with any robot vacuum cleaner integrated in Home Ass
 This project is a modification of the [PiotrMachowski](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card) project that I have adapted to my needs.
 
 ## Go to target
-![Go to target](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/blob/master/s1.gif)
+![Go to target](https://github.com/fjramirez1987/vacuum-map-card/blob/master/media/a1.gif)
 
 ## Zoned cleanup
-![Zoned cleanup](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/blob/master/s2.gif)
+![Zoned cleanup](https://github.com/fjramirez1987/vacuum-map-card/blob/master/media/a2.gif)
 
 ## Defined zones
-![Defined zones](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/blob/master/s3.gif)
+![Defined zones](https://github.com/fjramirez1987/vacuum-map-card/blob/master/media/a3.gif)
+
+## Rooms
+![Rooms](https://github.com/fjramirez1987/vacuum-map-card/blob/master/media/a4.gif)
 
 ## Configuration options
 
