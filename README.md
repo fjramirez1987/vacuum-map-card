@@ -1,4 +1,4 @@
-# Vacuum Map card
+# Vacuum Map Card
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
 [![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=popout)](https://community.home-assistant.io/t/xiaomi-vacuum-interactive-map-card/123901)
