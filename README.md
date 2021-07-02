@@ -6,7 +6,7 @@
 [![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/PiMachowski)
 
 
-This card enables you to specify a target or start a zoned cleanup using live or static map, just like in Mi Home app. Additionally you can define a list of zones and choose the ones to be cleaned.
+This card allows you to specify a target, initiate a cleaning by zones, defined zones or rooms using a live or static map, as in your vacuum cleaner application. Additionally, you can define cleaning repeats.
 
 ## Go to target
 ![Go to target](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/blob/master/s1.gif)
