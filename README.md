@@ -5,8 +5,11 @@
 [![buymeacoffee_badge](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-ff813f?style=flat)](https://www.buymeacoffee.com/PiotrMachowski)
 [![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/PiMachowski)
 
-
 This card allows you to specify a target, initiate a cleaning by zones, defined zones or rooms using a live or static map, as in your vacuum cleaner application. Additionally, you can define cleaning repeats.
+
+To be able to use this card with any robot vacuum cleaner integrated in Home Assistant, this card executes a service that you want, for example a script. The card will send some parameters that you can use in your script.
+
+This project is a modification of the [PiotrMachowski](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card) project that I have adapted to my needs.
 
 ## Go to target
 ![Go to target](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/blob/master/s1.gif)
