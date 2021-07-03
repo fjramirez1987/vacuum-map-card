@@ -27,17 +27,19 @@ This project is a modification of the [PiotrMachowski](https://github.com/PiotrM
 
 | Key | Type | Required | Default | Description |
 | --- | --- | --- | --- | --- |
-| `entity` | `string` | `True` | - | ID of Xiaomi vacuum entity |
+| `entity` | `string` | `True` | - | ID of vacuum entity |
 | `map_image` | `string` | `False` | - | Path to image of map |
 | `map_camera` | `string` | `False` | - | ID of map camera entity (for map without root on a vacuum use [this](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) integration) |
 | `camera_refresh_interval` | `integer` | `False` | 5 | Update interval for map camera in seconds |
 | `camera_calibration` | `boolean` | `False` | - | Automatic calibration if camera entity provides `calibration_points` attribute |
 | `calibration_points` | `list` | `False` | - | Pairs of coordinates: in vacuum system and on map image. See: [Calibration](#calibration)  |
 | `zones` | `list` | `False` | Empty | List of predefined zones |
+| `rooms` | `list` | `False` | Empty | List of id rooms |
 | `modes` | `list` | `False` | `[go_to_target, zoned_cleanup, predefined_zones]` | List of displayed modes. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
 | `default_mode` | `string` | `False` | - | Default selected mode. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
 | `debug` | `boolean` | `False` | `false` | Enables alerts with coordinates after holding `Start` button. Possible values: `true`, `false` |
 | `service` | `string` | `False` | `vacuum.send_command` | Allows to define service used after clicking `Start` button. See: [Defining service](#defining-service) |
+| `service` | `string` | `False` | `script.vacuum_return_to_base` | Allows to define service used after clicking `Return` button. See: [Defining service](#defining-service-return) |
 | `ignore_zones_limit` | `boolean` | `False` | `false` | Disables 5 zones limit. Possible values: `true`, `false`. See: [Defining service](#defining-service) |
 | `language` | `string` | `False` | `en` | Language used in the card. Possible values: `cz`, `en`, `de`, `dk`, `es`, `fi`, `fr`, `hu`, `it`, `nl`, `no`, `pl`, `pt`, `ru`, `se`, `sk`, `uk` |
 
