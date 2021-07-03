@@ -38,8 +38,8 @@ This project is a modification of the [PiotrMachowski](https://github.com/PiotrM
 | `modes` | `list` | `False` | `[go_to_target, zoned_cleanup, predefined_zones]` | List of displayed modes. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
 | `default_mode` | `string` | `False` | - | Default selected mode. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
 | `debug` | `boolean` | `False` | `false` | Enables alerts with coordinates after holding `Start` button. Possible values: `true`, `false` |
-| `service` | `string` | `False` | `vacuum.send_command` | Allows to define service used after clicking `Start` button. See: [Defining service](#defining-service) |
-| `service` | `string` | `False` | `script.vacuum_return_to_base` | Allows to define service used after clicking `Return` button. See: [Defining service](#defining-service-return) |
+| `service_start` | `string` | `False` | `vacuum.send_command` | Allows to define service used after clicking `Start` button. See: [Defining service_start](#defining-service-start) |
+| `service_return` | `string` | `False` | `script.vacuum_return_to_base` | Allows to define service used after clicking `Return` button. See: [Defining service-return](#defining-service-return-to-base) |
 | `ignore_zones_limit` | `boolean` | `False` | `false` | Disables 5 zones limit. Possible values: `true`, `false`. See: [Defining service](#defining-service) |
 | `language` | `string` | `False` | `en` | Language used in the card. Possible values: `cz`, `en`, `de`, `dk`, `es`, `fi`, `fr`, `hu`, `it`, `nl`, `no`, `pl`, `pt`, `ru`, `se`, `sk`, `uk` |
 
@@ -95,20 +95,21 @@ zones:
 
 To calibrate this card follow instructions from [this](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card/wiki) guide.
 
-## Defining service
+## Defining service start
 
-You can use a `service` parameter for example to run a script instead of starting a vacuum directly. Provided service will be run with following parameters:
+You can use a `service_start` parameter, for example, to run a script instead of directly starting your vacuum cleaner. The provided service will run with the following parameters that you can use in your script to do one thing or another.
 * `entity_id` - id of a vacuum
-* `command` - one of two:
+* `mode` - one of three:
   * `app_goto_target` - for _Go to target_ mode
-  * `zoned_cleanup` - for _Zoned cleanup_ and _Predefined zones_ modes
+  * `app_zoned_clean` - for _Zoned cleanup_ and _Predefined zones_ modes
+  * `rooms_cleanup` - for _Rooms cleanup_ mode
 * `params` - point or a list of zones (the same value as displayed in `debug` mode)
+* `count` - for count the cleanings in your script. Started at 0
+* `repeats` - for indicate the number of repetitions
 
-| WARNING: In the current version of Home Assistant the service `vacuum.send_command` does not support templates! |
-| --- |
-| To overcome this issue you can use a [*script*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/examples/vacuum_send_command_multiple_zones.yaml) and a [*python script*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/examples/vacuum_send_command.py). |
+## Defining service return to base
 
-Example HA script that can be used with this card is available [*here*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/examples/vacuum_send_command.yaml).
+You can use a `service_return` parameter, for example, to run a script instead of directly starting a vacuum cleaner service. You can simply use the service to return to the base of your vacuum cleaner.
 
 ## Hints
 * To find out values for `calibration_points` you can use the service `vacuum.send_command` with data:
