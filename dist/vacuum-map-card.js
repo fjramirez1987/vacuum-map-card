@@ -151,12 +151,12 @@ class VacuumMapCard extends LitElement {
             this.mode = this.modes.indexOf(availableModes.get(config.default_mode)) + 1 ;
         }
 
-        if (config.service && config.service.split(".").length === 2) {
-            this.service_domain = config.service.split(".")[0];
-            this.service_method = config.service.split(".")[1];
+        if (config.service_start && config.service_start.split(".").length === 2) {
+            this.service_start_domain = config.service_start.split(".")[0];
+            this.service_start_method = config.service_start.split(".")[1];
         } else {
-            this.service_domain = "script";
-            this.service_method = "vacuum_send_command";
+            this.service_start_domain = "script";
+            this.service_start_method = "vacuum_send_command";
         }
 
         // Configuración de servicio volver a la base:
@@ -257,7 +257,7 @@ class VacuumMapCard extends LitElement {
                 <div id="buttonMode_4" class="buttonBackground buttonMode ${this.isSelected(4)}" style="top:190px;" @click="${() => this.modeSelectButton(4)}"><ha-icon class="buttonIcon buttonIconMode" icon="mdi:view-dashboard"></ha-icon></div>
                 <div class="buttonBackground buttonMode" style="top:280px;" @click="${() => this.vacuumZonedIncreaseButton()}"><ha-icon class="buttonIcon buttonIconReplay" icon="mdi:replay"></ha-icon><span class="txtCountReplay">${this.vacuumZonedCleanupRepeats}</span></div>
                 <div class="buttonBackground buttonStart" @click="${() => this.vacuumStartButton(true)}"><ha-icon class="buttonIcon buttonIconStart" icon="mdi:power"></ha-icon></div>
-                <div class="buttonBackground buttonReturnToBase" @click="${() => this.vacuumReturnToBase()}"><ha-icon class="buttonIcon buttonIconRun" icon="mdi:flash"></ha-icon></div>
+                <div class="buttonBackground buttonReturnToBase" @click="${() => this.vacuumReturnToBase()}"><ha-icon class="buttonIcon buttonIconStart" icon="mdi:flash"></ha-icon></div>
                 
                     <img id="mapBackground" @load="${() => this.calculateScale()}" src="${this.map_image}">
                     <canvas id="mapDrawing" style="${this.getCanvasStyle()}"
@@ -653,7 +653,7 @@ class VacuumMapCard extends LitElement {
                 '\nrepeats: ' + this.vacuumZonedCleanupRepeats
                 );
         } else {
-            this._hass.callService(this.service_domain, this.service_method, {
+            this._hass.callService(this.service_start_domain, this.service_start_method, {
                 entity_id: this._config.entity,
                 mode: "app_goto_target",
                 params: [mapPos.x, mapPos.y],
@@ -678,7 +678,7 @@ class VacuumMapCard extends LitElement {
                 '\nrepeats: ' + this.vacuumZonedCleanupRepeats
                 );
         } else {
-            this._hass.callService(this.service_domain, this.service_method, {
+            this._hass.callService(this.service_start_domain, this.service_start_method, {
                 entity_id: this._config.entity,
                 mode: "app_zoned_clean",
                 params: zone,
@@ -707,7 +707,7 @@ class VacuumMapCard extends LitElement {
                 '\nrepeats: ' + this.vacuumZonedCleanupRepeats
                 );
         } else {
-            this._hass.callService(this.service_domain, this.service_method, {
+            this._hass.callService(this.service_start_domain, this.service_start_method, {
                 entity_id: this._config.entity,
                 mode: "app_zoned_clean",
                 params: zone,
@@ -747,7 +747,7 @@ class VacuumMapCard extends LitElement {
             }
         } else {
             if (roomsId.length > 0){
-                this._hass.callService(this.service_domain, this.service_method, {
+                this._hass.callService(this.service_start_domain, this.service_start_method, {
                     entity_id: this._config.entity,
                     mode: "rooms_cleanup",
                     params: roomsId,
@@ -755,7 +755,7 @@ class VacuumMapCard extends LitElement {
                     repeats: this.vacuumZonedCleanupRepeats
                 }).then(() => this.showToast());
             } else {
-                this._hass.callService(this.service_domain, this.service_method, {
+                this._hass.callService(this.service_start_domain, this.service_start_method, {
                     entity_id: this._config.entity,
                     mode: "all_rooms_cleanup",
                     params: roomsId,

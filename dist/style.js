@@ -149,13 +149,13 @@ const style = html`
         .buttonReturnToBase{
             background-color: #2FB337;
             left:10px;
-            bottom:10px;
+            bottom:15px;
         }
 
         .buttonStart{
             background-color: #5F90D3;
             right:10px;
-            bottom:10px;
+            bottom:15px;
         }
 
         .buttonIcon{
