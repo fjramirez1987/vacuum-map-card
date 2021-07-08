@@ -156,7 +156,7 @@ class VacuumMapCard extends LitElement {
             this.service_start_method = config.service_start.split(".")[1];
         } else {
             this.service_start_domain = "script";
-            this.service_start_method = "vacuum_send_command";
+            this.service_start_method = "vacuum_start";
         }
 
         // Configuración de servicio volver a la base:

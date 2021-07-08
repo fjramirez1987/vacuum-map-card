@@ -1,10 +1,5 @@
 # Vacuum Map Card
 
-[![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs)
-[![Community Forum](https://img.shields.io/badge/community-forum-brightgreen.svg?style=popout)](https://community.home-assistant.io/t/xiaomi-vacuum-interactive-map-card/123901)
-[![buymeacoffee_badge](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-ff813f?style=flat)](https://www.buymeacoffee.com/PiotrMachowski)
-[![paypalme_badge](https://img.shields.io/badge/Donate-PayPal-0070ba?style=flat)](https://paypal.me/PiMachowski)
-
 This card allows you to specify a target, initiate a cleaning by zones, defined zones or rooms using a live or static map, as in your vacuum cleaner application. Additionally, you can define cleaning repeats.
 
 To be able to use this card with any robot vacuum cleaner integrated in Home Assistant, this card executes a service that you want, for example a script. The card will send some parameters that you can use in your script.
@@ -35,12 +30,11 @@ This project is a modification of the [PiotrMachowski](https://github.com/PiotrM
 | `calibration_points` | `list` | `False` | - | Pairs of coordinates: in vacuum system and on map image. See: [Calibration](#calibration)  |
 | `zones` | `list` | `False` | Empty | List of predefined zones |
 | `rooms` | `list` | `False` | Empty | List of id rooms |
-| `modes` | `list` | `False` | `[go_to_target, zoned_cleanup, predefined_zones]` | List of displayed modes. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
+| `modes` | `list` | `False` | `[go_to_target, zoned_cleanup, predefined_zones, rooms_cleanup]` | List of displayed modes. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones`, `rooms_cleanup` |
 | `default_mode` | `string` | `False` | - | Default selected mode. Possible values: `go_to_target`, `zoned_cleanup`, `predefined_zones` |
 | `debug` | `boolean` | `False` | `false` | Enables alerts with coordinates after holding `Start` button. Possible values: `true`, `false` |
-| `service_start` | `string` | `False` | `vacuum.send_command` | Allows to define service used after clicking `Start` button. See: [Defining service_start](#defining-service-start) |
-| `service_return` | `string` | `False` | `script.vacuum_return_to_base` | Allows to define service used after clicking `Return` button. See: [Defining service-return](#defining-service-return-to-base) |
-| `ignore_zones_limit` | `boolean` | `False` | `false` | Disables 5 zones limit. Possible values: `true`, `false`. See: [Defining service](#defining-service) |
+| `service_start` | `string` | `False` | `script.vacuum_start` | Allows to define service used after clicking `Start` button. See: [Defining service_start](#defining-service-start) |
+| `service_return` | `string` | `False` | `script.vacuum_return_to_base` | Allows to define service used after clicking `Return` button. See: [Defining service_return](#defining-service-return-to-base) |
 | `language` | `string` | `False` | `en` | Language used in the card. Possible values: `cz`, `en`, `de`, `dk`, `es`, `fi`, `fr`, `hu`, `it`, `nl`, `no`, `pl`, `pt`, `ru`, `se`, `sk`, `uk` |
 
 ## Example usage:
@@ -75,27 +69,45 @@ zones:
 ```
 
 ## Installation
-1. Download [*xiaomi-vacuum-map-card.js*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/xiaomi-vacuum-map-card.js), [*coordinates-converter.js*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/coordinates-converter.js), [*texts.js*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/texts.js) and [*style.js*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/style.js) to `/www/custom_lovelace/xiaomi_vacuum_map_card` directory:
-    ```bash
-    mkdir -p www/custom_lovelace/xiaomi_vacuum_map_card
-    cd www/custom_lovelace/xiaomi_vacuum_map_card/
-    wget https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/xiaomi-vacuum-map-card.js
-    wget https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/coordinates-converter.js
-    wget https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/texts.js
-    wget https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/style.js
-    ```
-2. Add the card to resources in `ui-lovelace.yaml` or in the raw editor if you are using the frontend UI editor:
-    ```yaml
-    resources:
-      - url: /local/custom_lovelace/xiaomi_vacuum_map_card/xiaomi-vacuum-map-card.js
-        type: module
-    ```
+
+
+### Using HACS (recommended)
+This card can be installed using [HACS](https://hacs.xyz). Add this repository `https://github.com/fjramirez1987/vacuum-map-card` as a custom repository in HACS.
+
+### Manual
+
+Download all the files from [https://github.com/fjramirez1987/vacuum-map-card/tree/master/dist](https://github.com/fjramirez1987/vacuum-map-card/tree/master/dist) to the `/www/custom_lovelace/vacuum_map_card` directory of your Home Assistant.
 
 ## Calibration
+You must indicate in some way that the coordinates of a point on your map correspond to a point in your physical space. This is known as converting pixels to meters.
 
-To calibrate this card follow instructions from [this](https://github.com/PiotrMachowski/lovelace-xiaomi-vacuum-map-card/wiki) guide.
+This is highly dependent on your robot and you will need to do some tests to determine the relationship between pixels on your map and the coordinate values your robot interprets (the value is not always meters). I know it is not something simple.
 
-## Defining service start
+### With Xiaomi Cloud Map Extractor (recommended)
+If you use the [With Xiaomi Cloud Map Extractor](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) integration to extract your map, your card is automatically calibrated by adding the following settings:
+
+- `calibration_points` in [camera configuration](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor#attributes-configuration).
+- `camera_calibration: true` in card configuration.
+
+Example configuration:
+```yaml
+type: custom:vacuum-map-card
+entity: vacuum.xiaomi_vacuum
+map_camera: camera.xiaomi_cloud_map_extractor
+camera_calibration: true
+```
+### Xiaomi Home (manual)
+
+1. Open map view in Xiaomi Home
+2. Open dev tools in Home Assistant
+3. Call service `vacuum.send_command` with different parameters to estimate your vacuums coordinates system. Point [25500, 25500] is usually very close to the docking station, difference of 1000 translates to 1 meter distance. If your vacuum is unable to get to a desired point try changing coordinates in the opposite way.
+4. Estimate coordinates of a zone that will cover a whole map
+Call service `xiaomi_miio.vacuum_clean_zone` with estimated coordinates
+5. Take a screenshot of a map with a marked zone
+
+[Here](https://hackernoon.com/how-i-set-up-room-cleaning-automation-with-google-home-home-assistant-and-xiaomi-vacuum-cleaner-9149e0267e6d) is a pretty good explanation how to find out coordinates for different points on the map. There is just one mistake: [25500, 25500] is not always exactly at the position of a docking station.
+
+## Defining service_start
 
 You can use a `service_start` parameter, for example, to run a script instead of directly starting your vacuum cleaner. The provided service will run with the following parameters that you can use in your script to do one thing or another.
 * `entity_id` - id of a vacuum
@@ -107,32 +119,13 @@ You can use a `service_start` parameter, for example, to run a script instead of
 * `count` - for count the cleanings in your script. Started at 0
 * `repeats` - for indicate the number of repetitions
 
-## Defining service return to base
+## Defining service_return_to_base
 
 You can use a `service_return` parameter, for example, to run a script instead of directly starting a vacuum cleaner service. You can simply use the service to return to the base of your vacuum cleaner.
 
 ## Hints
-* To find out values for `calibration_points` you can use the service `vacuum.send_command` with data:
-  ```json
-  {
-    "entity_id": "vacuum.xiaomi_vacuum",
-    "command": "app_goto_target",
-    "params": [25500, 25500]
-  }
-  ```
-  Alternatively you can use `vacuum.xiaomi_clean_zone`:
-    ```json
-    {
-      "entity_id": "vacuum.xiaomi_vacuum",
-      "zone": [[25500, 25500, 26500, 26500]],
-      "repeats": 1
-    }
-    ```
-* You can find out coordinates for zones using two methods:
-  * Enabling `debug` in settings, drawing zone in `Zoned cleanup` mode and holding `Start` button. Note: this method also works for other modes.
-  * Android App [*FloleVac*](https://play.google.com/store/apps/details?id=de.flole.xiaomi)
 
-* To add another language modify file [*texts.js*](https://github.com/PiotrMachowski/Home-Assistant-Lovelace-Xiaomi-Vacuum-Map-card/raw/master/dist/texts.js) and set the `language` parameter in cards configuration.
+* You can find out coordinates for zones enabling `debug` in settings, drawing zone in `Zoned cleanup` mode and holding `Start` button.
 
 ## FAQ
 * **Can this card show a live map?**
@@ -146,6 +139,3 @@ You can use a `service_return` parameter, for example, to run a script instead o
 * **How to create a map?**
 
   You can use any image you want, the easiest way is to use a screenshot from Mi Home/FloleVac or [this](https://github.com/PiotrMachowski/Home-Assistant-custom-components-Xiaomi-Cloud-Map-Extractor) integration to provide live map without rooting.
-
-
-<a href="https://www.buymeacoffee.com/PiotrMachowski" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
